@@ -1,0 +1,8 @@
+const gbs = {
+    dev_path: '/slsAdminApi', // 开发跟地址 开发模式下可跨域
+    prod_path: '', //上线地址
+    image_path: '', // 图片引用的路径
+    upload_path: '', //上传文件和图片的路径
+    prefix_store: 'zym_admin_', // 本地存储localStore的key前缀
+}
+export default gbs
