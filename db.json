@@ -3,9 +3,18 @@
         "status": 200,
         "msg": "登录成功",
         "data": {
-            "token": "token",
-            "refreshToken": "refreshToken"
+            "userinfo": {
+                "token": "token",
+                "refreshToken": "refreshToken"
+            }
         }
+    },
+    "menu": {
+        "status": 200,
+        "msg": "操作成功",
+        "data": [{}]
     }
+
+
 
 }

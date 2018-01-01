@@ -32,7 +32,7 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
             '/jiumaApi': { //设置跨域代理
-                target: 'http://192.168.1.12',
+                target: 'http://127.0.0.1:3004',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/jiumaApi': ''

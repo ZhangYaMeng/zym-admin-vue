@@ -8,7 +8,7 @@
 
 <script>
     export default {
-        name: 'app',
+        //name: 'app',
         components: {},
         methods:{
             
@@ -20,8 +20,7 @@
             $route(to,from){
                 // console.log(to);
                 if (!to.matched.length) {
-                    this.$router.push('/404');
-                    
+                    this.$router.push('/404');             
                 }
             }
         }
