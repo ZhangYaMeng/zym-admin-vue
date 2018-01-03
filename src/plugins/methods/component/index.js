@@ -1,13 +1,13 @@
 import Vue from 'vue';
 // 可以考虑使用webpack的去中心化函数通过正则加载 组件
-let componentsArr = require.context('@/components/Common', true, /.vue$/).keys();
+let componentsArr = require.context('@/components/Common', true, /.vue$/);
 
 let component = function() {
-    return (function(target, source) {
-        source.forEach(element => {
+    return ((target, source) => {
+        source.keys().forEach(element => {
             let componentName = element.substring(2, element.length - 4);
             //注册的组件
-            target.component(componentName, element);
+            target.component(componentName, source(element).default);
         });
     })(Vue, componentsArr)
 }

@@ -18,7 +18,7 @@
 </style>
 <style scoped lang="less">
 	.login {
-		//min-width: 1000px;
+		min-width: 1000px;
 		position: absolute;
 		left: 0;
 		right: 0;
@@ -27,7 +27,7 @@
 		background: no-repeat center;
 		background-size: cover;
 		overflow: auto;
-		transition: background-image 1s;
+		//transition: background-image 1s;
 	}
 	.login>img {
 		position: absolute;
@@ -95,7 +95,7 @@
 </style>
 
 <template>
-	<div ref="login" class="login" style="background: pink;">
+	<div ref="login" class="login" :style="backgroundImage">
 		<img src="../../static/img/logo_black.png">
 		<el-form :model="form" :rules="rules" ref="form" label-position="left" label-width="0px" class="demo-ruleForm login-container">
 			<h3 class="title">登录</h3>
@@ -118,13 +118,13 @@
 </template>
 
 <script>
-	// import background1 from "../../static/img/background_1.jpg";
-	// import background2 from "../../static/img/background_2.jpg";
+	import background1 from "../../static/img/background_1.jpg";
+	import background2 from "../../static/img/background_2.jpg";
 	// import md5 from 'md5';
 	export default {
 		data() {
 			return {
-				//backgroundUrl: background1,
+				backgroundUrl: background1,
 				loading: false,
 				form: {
 					username: '',
@@ -153,21 +153,20 @@
 			// }
 		},
 		beforeDestroy() {
-			console.log("login")
 			this.$refs.login.display="none";
 			//移除时需要销毁定时器、取消键盘监听
-			//clearInterval(this.changeBackgroundTimer);
-			//document.onkeyup = null;
+			clearInterval(this.changeBackgroundTimer);
+			document.onkeyup = null;
 		},
 		mounted() {
 			//定时更新背景
-			// this.changeBackgroundTimer = setInterval(() => {
-			// 	if (this.backgroundUrl === background1) {
-			// 		this.backgroundUrl = background2;
-			// 	} else {
-			// 		this.backgroundUrl = background1;
-			// 	}
-			// }, 5000);
+			this.changeBackgroundTimer = setInterval(() => {
+				if (this.backgroundUrl === background1) {
+					this.backgroundUrl = background2;
+				} else {
+					this.backgroundUrl = background1;
+				}
+			}, 5000);
 		},
 		methods: {
 			submit() {
@@ -190,11 +189,11 @@
 			}
 		},
 		computed: {
-			// backgroundImage() {
-			// 	return {
-			// 		backgroundImage: `url(${this.backgroundUrl})`
-			// 	}
-			// }
+			backgroundImage() {
+				return {
+					backgroundImage: `url(${this.backgroundUrl})`
+				}
+			}
 		}
 	}
 </script>

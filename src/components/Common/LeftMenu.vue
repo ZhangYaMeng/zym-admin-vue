@@ -1,13 +1,11 @@
 <style lang="less"> 
-.leftmenu{
+.left-menu {
     position: fixed;
     float: left;
     top: 60px;
-    width:190px;
+    //width:200px;
     // margin-right:-190px; 
     height:100%; 
-    .left-menu{
-        height: 100%;
         background: #3e3f41;
         //position: relative;
         overflow-x: hidden;
@@ -16,13 +14,13 @@
                background: #3e3f41;
             }          
         }
-    }
+    
 }
   
 </style>
 
 <template>
-    <div class="leftmenu">
+    <!-- <div class="leftmenu" > -->
         <div class="left-menu">
             <!--导航菜单-->
            <el-row class='tac'
@@ -30,7 +28,8 @@
               :key='route.path'
               v-if='!route.hidden && $route.matched.length && $route.matched[0].path===route.path'>
         <el-col :span="24">
-          <el-menu
+          <el-menu     
+     
             class="el-menu-vertical-demo"
             theme="dark"
             background-color="#545c64"
@@ -83,7 +82,7 @@
         </el-col>
       </el-row>
         </div>
-    </div>
+    <!-- </div> -->
 </template>
 
 <script>

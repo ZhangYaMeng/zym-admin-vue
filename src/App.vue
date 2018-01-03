@@ -1,8 +1,11 @@
 <template>
     <div id="app">
         <transition name="bounce">
-            <router-view></router-view>
+            <keep-alive>
+                <router-view></router-view>
+            </keep-alive>
         </transition>
+        
     </div>
 </template>
 
