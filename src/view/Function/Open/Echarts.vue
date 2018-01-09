@@ -10,9 +10,19 @@
             return {};
         },
         created() {
-    
+    console.log("created")
         },
-        mounted() {           
+        mounted() {   
+            console.log("mounted")        
+        },
+        updated(){
+console.log("updated")
+        },
+        activated(){
+console.log("activated")
+        },
+        deactivated(){
+console.log("deactivated")
         },
         methods: {
 

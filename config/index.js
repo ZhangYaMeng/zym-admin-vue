@@ -31,13 +31,13 @@ module.exports = {
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
         proxyTable: {
-            '/jiumaApi': { //设置跨域代理
-                target: 'http://127.0.0.1:3000',
-                changeOrigin: true,
-                pathRewrite: {
-                    '^/jiumaApi': ''
-                }
-            }
+            // '/jiumaApi': { //设置跨域代理
+            //     target: 'http://127.0.0.1:8081/api',
+            //     changeOrigin: true,
+            //     pathRewrite: {
+            //         '^/jiumaApi': ''
+            //     }
+            // }
 
         },
         // CSS Sourcemaps off by default because relative paths are "buggy"

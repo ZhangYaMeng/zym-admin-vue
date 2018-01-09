@@ -87,26 +87,28 @@ export default new Router({
                         component: ComponentsInput
                     }]
                 }]
-            }, { //高级实战
-                path: '/adv',
-                name: '高级实战',
-                icon: 'inbox',
-                component: Home,
-                redirect: '/adv/article',
-                children: [{
-                    path: 'article',
-                    name: 'article-manager',
-                    icon: 'inbox',
-                    component: Content,
-                    redirect: '/adv/article/list',
-                    children: [{
-                        path: 'list',
-                        name: 'article-list',
-                        icon: 'reorder',
-                        component: AdvList
-                    }]
-                }]
-            }, {
+            },
+            /* { //高级实战
+                           path: '/adv',
+                           name: '高级实战',
+                           icon: 'inbox',
+                           component: Home,
+                           redirect: '/adv/article',
+                           children: [{
+                               path: 'article',
+                               name: 'article-manager',
+                               icon: 'inbox',
+                               component: Content,
+                               redirect: '/adv/article/list',
+                               children: [{
+                                   path: 'list',
+                                   name: 'article-list',
+                                   icon: 'reorder',
+                                   component: AdvList
+                               }]
+                           }]
+                       }, */
+            {
                 path: '/404',
                 name: '404',
                 hidden: true,

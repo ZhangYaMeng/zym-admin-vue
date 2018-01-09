@@ -24,10 +24,9 @@
 		right: 0;
 		top: 0;
 		bottom: 0;
-		background: no-repeat center;
+		background:url(../../static/img/background_1.jpg) no-repeat center;
 		background-size: cover;
 		overflow: auto;
-		//transition: background-image 1s;
 	}
 	.login>img {
 		position: absolute;
@@ -95,13 +94,13 @@
 </style>
 
 <template>
-	<div ref="login" class="login" :style="backgroundImage">
+	<div ref="login" class="login" >
 		<img src="../../static/img/logo_black.png">
 		<el-form :model="form" :rules="rules" ref="form" label-position="left" label-width="0px" class="demo-ruleForm login-container">
 			<h3 class="title">登录</h3>
 			<el-form-item prop="account">
 				<i class="ui_icon ui_user"></i>
-				<el-input type="text" v-model="form.username" placeholder="账号或手机号：" class="publicInput">
+				<el-input type="text" @keyup.enter="submit" v-model="form.username" placeholder="账号或手机号：" class="publicInput">
 				</el-input>
 			</el-form-item>
 			<el-form-item prop="checkPass">
@@ -118,13 +117,13 @@
 </template>
 
 <script>
-	import background1 from "../../static/img/background_1.jpg";
-	import background2 from "../../static/img/background_2.jpg";
-	// import md5 from 'md5';
+
+ 	import Home from '@/components/Routeview/Home'
+	import Content from '@/components/Routeview/Content'
+// import md5 from 'md5';
 	export default {
 		data() {
 			return {
-				backgroundUrl: background1,
 				loading: false,
 				form: {
 					username: '',
@@ -134,52 +133,94 @@
 					username: [
 						{ required: true,message: '请输入账号',trigger: 'blur'}
 					],
-					password: [{ required: true,message: '请输入密码',trigger: 'blur' } ]
+					password: [
+						{ required: true,message: '请输入密码',trigger: 'blur' } 
+					]
 				},
-				changeBackgroundTimer: null,
 				remember: true
 			};
 		},
 		created() {
-			//初始化时，若本地记录了登录信息，则默认填充登录信息
-			// let account = this.getStorage(this.KEYS.USER_ACCOUNT);
-			// if(account){
-			//     let {username, password, remember} = account;
-			//     this.remember = remember;
-			//     if(remember){
-			//         this.form.username = username;
-			//         this.form.password = password;
-			//     }
-			// }
-		},
-		beforeDestroy() {
-			this.$refs.login.display="none";
-			//移除时需要销毁定时器、取消键盘监听
-			clearInterval(this.changeBackgroundTimer);
-			document.onkeyup = null;
+			
 		},
 		mounted() {
-			//定时更新背景
-			this.changeBackgroundTimer = setInterval(() => {
-				if (this.backgroundUrl === background1) {
-					this.backgroundUrl = background2;
-				} else {
-					this.backgroundUrl = background1;
-				}
-			}, 5000);
 		},
 		methods: {
 			submit() {
+
 				this.loading = true;
 				this.$refs.form.validate((valid) => {
-					if (valid) {
-						
+					if (valid) {						
 						this.$$login(this.form).then( (res)=>{
 							// 存储用户信息
 							this.store.set("userinfo",res.data);
+
+						
+					let viewsArr = require.context('@/view', true, /.vue$/);
+	let tepmrout = [{ //高级实战
+                           path: '/adv',
+                           name: '高级实战',
+                           icon: 'inbox',
+                           component: 'Home',
+                           redirect: '/adv/article',
+                           children: [{
+                               path: 'article',
+                               name: 'article-manager',
+                               icon: 'inbox',
+                               component: 'Content',
+                               redirect: '/adv/article/list',
+                               children: [{
+                                   path: 'list',
+                                   name: 'article-list',
+                                   icon: 'reorder',
+                                   component: "List"
+                               }]
+                           }]
+                       }];	 
+	 let arr = tepmrout.map( ele =>{
+		  			if(ele.component === "Home"){
+						ele.component = Home								
+					}
+					 ele.children.map( elesub =>{
+						if(elesub.component === "Content"){
+							elesub.component = Content								
+						}
+						elesub.children.map( elechild =>{							
+							viewsArr.keys().forEach(element => {          
+								let viewsName = element.substring(2, element.length - 4);
+								let tempArr = viewsName.split("/");
+								viewsName = tempArr[tempArr.length-1]
+								if(viewsName === elechild.component){
+								 	elechild.component = viewsArr(element).default								
+								}
+							});
+						})
+					})
+					return ele
+				})	
+
+				// 先把要添加重复判断
+				this.$router.addRoutes(tepmrout);
+				this.$router.options.routes = this.$router.options.routes.concat(tepmrout);
+				
+				var res = [];
+				var json = {};
+				this.$router.options.routes.forEach( (ele)=>{
+					if(!json[ele.name]){
+						res.push(ele);
+						json[ele.name] = 1;
+					}
+				})
+				this.$router.options.routes = res;
+               //console.log(this.$router.options.routes)
+					//let routerTemp = this.$router.options.routes.concat(tepmrout);
+					
+					this.store.set("routes",res);
+						//console.log(this.$router.options.routes);
 							// 所有请求都请求完了再取消加载样式
 							this.loading = false; 
-							this.$router.push('/function/open/echarts')
+							this.$router.push('/adv/article/list')
+							
 						})						
 					} else {
 						this.loading = false;
@@ -189,11 +230,11 @@
 			}
 		},
 		computed: {
-			backgroundImage() {
-				return {
-					backgroundImage: `url(${this.backgroundUrl})`
-				}
-			}
+			// backgroundImage() {
+			// 	return {
+			// 		backgroundImage: `url(${this.backgroundUrl})`
+			// 	}
+			// }
 		}
 	}
 </script>

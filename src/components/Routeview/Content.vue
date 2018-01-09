@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="" :style="{'height':win_size.height}">
     <transition name="fade">
       <keep-alive>
         <router-view></router-view>
@@ -9,13 +9,20 @@
 </template>
 <script>
   export default {
-    name: 'content',
     data () {
-      return {}
+      return {
+         win_size: {
+                height: ''
+            },
+      }
     },
-    methods: {},
+    methods: {
+      setSize() {
+        this.win_size.height = document.documentElement.clientHeight + 'px'
+      }
+    },
     created () {
-
+      this.setSize();
     },
     mounted () {
 

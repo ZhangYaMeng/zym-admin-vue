@@ -6,7 +6,7 @@ let component = function() {
     return ((target, source) => {
         source.keys().forEach(element => {
             let componentName = element.substring(2, element.length - 4);
-            //注册的组件
+            //全局注册的组件
             target.component(componentName, source(element).default);
         });
     })(Vue, componentsArr)

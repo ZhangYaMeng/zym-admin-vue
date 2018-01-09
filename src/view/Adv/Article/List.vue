@@ -6,13 +6,15 @@
 
 <script>
     export default {
+        name: 'List',
         data() {
             return {};
         },
         created() {
-    
+            console.log("created")
         },
-        mounted() {           
+        mounted() {  
+            console.log("mounted")         
         },
         methods: {
 

@@ -1,8 +1,8 @@
 <template>
   <div class='bread'>
-    <strong>
+    <!-- <strong>
       {{strong}}
-    </strong>
+    </strong> -->
     <el-breadcrumb separator="/" class='el-bread'>
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item
@@ -15,7 +15,6 @@
 
 <script>
   export default {
-    name: 'bread',
     data () {
       return {
         strong: ''
@@ -47,6 +46,9 @@
   .bread {
     height: 40px;
     line-height: 26px;
+    //margin-top:60px;
+    position: fixed;
+    top: 60px;
     .el-bread {
       display: inline-block;
       float: right;

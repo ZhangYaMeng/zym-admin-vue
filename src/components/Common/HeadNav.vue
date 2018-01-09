@@ -2,15 +2,16 @@
     .head-nav{
         display: block;
         min-width: 1090px;
+        width:100%;
         height: 60px;
         line-height: 60px;
         background: #3e3f41;
-        // position: fixed;
-        // top: 0px;
+        position: fixed;
+        top: 0px;
         // left: 0px;
         //z-index: 99;
          color: #FFF;
-         border-bottom: 1px solid #1F2D3D;      
+         border-bottom: 1px solid #000;      
         .el-menu {
             background: #3e3f41;
             .el-menu-item {
@@ -113,6 +114,10 @@
                 </el-col>
                 <el-col :span="1" class="hidemenu" >
                     <span @click='toggleMenu' :class="'el-icon-d-arrow-'+ ($store.state.leftmenu.menu_flag ?'left':'right')" ></span>
+                    
+                </el-col>
+                <el-col :span="1" class="hidemenu" >
+                    <span @click="toggleScreen" class="fa fa-arrows-alt"></span>
                 </el-col>
                 <el-col :span="8" class="headmenu">
                     <el-menu 
@@ -121,7 +126,7 @@
                     mode="horizontal" unique-opened router>
                     <!-- v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)' -->
                         <el-menu-item
-                            v-for='(item,index) in $router.options.routes'
+                            v-for='(item,index) in headRouter'
                             :index="item.path"
                             :key='item.path'
                             v-if='!item.hidden'>
@@ -156,15 +161,18 @@
 </template>
 
 <script>
-    export default {        
+   	import screenfull from 'screenfull'
+    export default {      
         data() {
             return {
+                headRouter:[],
                 sysDate:'',
                 clockTimer: null,
                 sysUserName:"开发部门-张亚蒙"
             }
         },
         created() {
+            
             //设置定时器，每一秒更新一次时间
             this.sysDate = new Date().Format(`yyyy-MM-dd  ${this.week()}  hh:mm:ss`);
             this.clockTimer = setInterval(()=>{
@@ -172,6 +180,13 @@
             }, 1000);
         },
         mounted() {
+            this.headRouter = this.store.get("routes");
+            // this.headRouter = this.$router.options.routes.concat(addroutes);
+            
+           // this.$router.options.routes = 
+            // this.$router.options.routes = addroutes;
+                // this.$router.addRoutes(addroutes);
+               // this.$router.options.routes = addroutes;
             //console.log(this.$route)
         },        
         methods: {
@@ -206,6 +221,17 @@
             toggleMenu(){
                 this.$store.dispatch(this.$store.state.leftmenu.menu_flag ? 'set_menu_close' : 'set_menu_open')
             },
+            toggleScreen(){
+                if (!screenfull.enabled) {
+					this.$message({
+					message: 'you browser can not work',
+					type: 'warning'
+					})
+					return false
+				}
+				screenfull.toggle()
+            },
+            	
             /**
              * 退出登录
              */
@@ -215,7 +241,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.$store.dispatch('remove_userinfo')
+                    //this.$store.dispatch('remove_userinfo')
                     this.$router.push('/login')
                 })
             },
