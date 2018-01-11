@@ -117,9 +117,7 @@
 </template>
 
 <script>
-
- 	import Home from '@/components/Routeview/Home'
-	import Content from '@/components/Routeview/Content'
+	import { asyncRouter } from 'utils/';
 // import md5 from 'md5';
 	export default {
 		data() {
@@ -154,9 +152,7 @@
 						this.$$login(this.form).then( (res)=>{
 							// 存储用户信息
 							this.store.set("userinfo",res.data);
-
-						
-					let viewsArr = require.context('@/view', true, /.vue$/);
+			
 	let tepmrout = [{ //高级实战
                            path: '/adv',
                            name: '高级实战',
@@ -176,47 +172,16 @@
                                    component: "List"
                                }]
                            }]
-                       }];	 
-	 let arr = tepmrout.map( ele =>{
-		  			if(ele.component === "Home"){
-						ele.component = Home								
-					}
-					 ele.children.map( elesub =>{
-						if(elesub.component === "Content"){
-							elesub.component = Content								
-						}
-						elesub.children.map( elechild =>{							
-							viewsArr.keys().forEach(element => {          
-								let viewsName = element.substring(2, element.length - 4);
-								let tempArr = viewsName.split("/");
-								viewsName = tempArr[tempArr.length-1]
-								if(viewsName === elechild.component){
-								 	elechild.component = viewsArr(element).default								
-								}
-							});
-						})
-					})
-					return ele
-				})	
+					   }];	 
+				// 把后台获取的字符串存起来 存贮组件太大
+				this.store.set("routes",tepmrout);
 
+	 			let arr = asyncRouter( tepmrout );
 				// 先把要添加重复判断
-				this.$router.addRoutes(tepmrout);
-				this.$router.options.routes = this.$router.options.routes.concat(tepmrout);
+				this.$router.addRoutes(arr);
+				this.$router.options.routes = this.$router.options.routes.concat(arr);
 				
-				var res = [];
-				var json = {};
-				this.$router.options.routes.forEach( (ele)=>{
-					if(!json[ele.name]){
-						res.push(ele);
-						json[ele.name] = 1;
-					}
-				})
-				this.$router.options.routes = res;
-               //console.log(this.$router.options.routes)
-					//let routerTemp = this.$router.options.routes.concat(tepmrout);
-					
-					this.store.set("routes",res);
-						//console.log(this.$router.options.routes);
+
 							// 所有请求都请求完了再取消加载样式
 							this.loading = false; 
 							this.$router.push('/adv/article/list')

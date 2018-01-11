@@ -126,7 +126,7 @@
                     mode="horizontal" unique-opened router>
                     <!-- v-if='!item.hidden && (($store.state.user.userinfo.access_status===1 && $store.state.user.userinfo.web_routers[item.path]) || $store.state.user.userinfo.access_status!==1)' -->
                         <el-menu-item
-                            v-for='(item,index) in headRouter'
+                            v-for='(item,index) in this.$router.options.routes'
                             :index="item.path"
                             :key='item.path'
                             v-if='!item.hidden'>
@@ -165,7 +165,6 @@
     export default {      
         data() {
             return {
-                headRouter:[],
                 sysDate:'',
                 clockTimer: null,
                 sysUserName:"开发部门-张亚蒙"
@@ -180,14 +179,7 @@
             }, 1000);
         },
         mounted() {
-            this.headRouter = this.store.get("routes");
-            // this.headRouter = this.$router.options.routes.concat(addroutes);
-            
-           // this.$router.options.routes = 
-            // this.$router.options.routes = addroutes;
-                // this.$router.addRoutes(addroutes);
-               // this.$router.options.routes = addroutes;
-            //console.log(this.$route)
+  
         },        
         methods: {
             week() {

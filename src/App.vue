@@ -16,14 +16,6 @@
         methods:{
             
         },
-        beforeCreate () {
-            
-        let router = this.store.get("routes");
-        if(router){
-            this.$router.addRoutes(router);
-        }
-
-        },
         mounted(){
             
         },

@@ -2,9 +2,19 @@ import Vue from 'vue'
 import Router from 'vue-router'
 Vue.use(Router)
 
+import { store, asyncRouter } from 'utils/';
+
+let user_routes = store.get('routes') || [];
+let arrRouter = asyncRouter(user_routes);
+
+
 import Login from '@/view/Login'
 import Home from '@/components/Routeview/Home'
 import Content from '@/components/Routeview/Content'
+
+
+
+
 
 //静态演示
 import FunctionEcharts from '@/view/Function/Open/Echarts'
@@ -115,7 +125,7 @@ export default new Router({
                 component: Login
             }
 
-        ]
+        ].concat(arrRouter)
     })
     /* {
                     path: '/',

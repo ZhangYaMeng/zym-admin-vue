@@ -37,7 +37,7 @@
 <style scoped lang='less'>
 .home{
     .content {
-      //margin-top: 60px;
+      margin-top: 100px;
       //background: #f1f2f7;
       height:100%;
       background: #FFF;

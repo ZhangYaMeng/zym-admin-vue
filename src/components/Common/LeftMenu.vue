@@ -3,7 +3,7 @@
 	<div class="left-menu" :style="{width:$store.state.leftmenu.width}">
 		<!--导航菜单-->
 		<el-row class='tac'
-			v-for="(route,index) in leftRouter"
+			v-for="(route,index) in this.$router.options.routes"
 			:key='route.path'
 			v-if='!route.hidden && $route.matched.length && $route.matched[0].path===route.path'>
 			<el-col :span="24">
@@ -71,8 +71,8 @@
         },
 
         mounted() {        
-		let addroutes = this.store.get("routes");   
-          this.leftRouter = addroutes;
+		// let addroutes = this.store.get("routes");   
+        //   this.leftRouter = addroutes;
         },
 
         beforeDestroy(){
